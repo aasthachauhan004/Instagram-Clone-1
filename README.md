@@ -9,6 +9,6 @@ Instagram Clone
   Firestore :
   Used Firestore to mantain Database of Users by making a collection of user docs which is called Users
   Storage :
-  Used to store Posts of all the users
+  Used to store Posts of all the users.
  
 
