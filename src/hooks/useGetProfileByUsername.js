@@ -25,8 +25,6 @@ const useGetProfileByUsername = (username) => {
         querySnapshot.forEach((doc) => {
           userDoc = doc.data();
         });
-        console.log("1");
-        console.log(userDoc);
         setUserProfile(userDoc);
       } catch (error) {
         console.log(error.message);

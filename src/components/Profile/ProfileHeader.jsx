@@ -5,21 +5,21 @@ import {
   VStack,
   Text,
   Button,
+  useDisclosure,
 } from "@chakra-ui/react";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
+import EditProfile from "./EditProfile";
 
 const ProfileHeader = () => {
   const { userProfile } = useUserProfileStore();
   const authUser = useAuthStore((state) => state.user);
-  console.log(JSON.parse(localStorage.getItem("user-info")));
-  console.log(authUser);
+
   const visitingOwnProfileAndAuth =
     authUser && authUser.username === userProfile.username;
   const visitingAnotherProfileAndAuth =
     authUser && authUser.username !== userProfile.username;
-  //console.log(visitingOwnProfileAndAuth);
-  console.log(authUser);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -58,6 +58,7 @@ const ProfileHeader = () => {
                   color={"black"}
                   _hover={{ bg: "whiteAlpha.800" }}
                   size={{ base: "xs", md: "sm" }}
+                  onClick={onOpen}
                 >
                   Edit Profile
                 </Button>
@@ -66,9 +67,9 @@ const ProfileHeader = () => {
             {visitingAnotherProfileAndAuth && (
               <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
                 <Button
-                  bg={"white"}
-                  color={"black"}
-                  _hover={{ bg: "whiteAlpha.800" }}
+                  bg={"blue.500"}
+                  color={"white"}
+                  _hover={{ bg: "blue.600" }}
                   size={{ base: "xs", md: "sm" }}
                 >
                   Follow
@@ -76,6 +77,7 @@ const ProfileHeader = () => {
               </Flex>
             )}
           </Flex>
+
           <Flex alignItems={"center"} gap={{ base: 2, md: 4 }}>
             <Text fontSize={{ base: "xs", md: "sm" }}>
               <Text as='span' fontWeight={"bold"} mr={1}>
@@ -103,6 +105,7 @@ const ProfileHeader = () => {
           </Flex>
           <Text fontSize={"sm"}>{userProfile.bio}</Text>
         </VStack>
+        {onOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
       </Flex>
     </>
   );
