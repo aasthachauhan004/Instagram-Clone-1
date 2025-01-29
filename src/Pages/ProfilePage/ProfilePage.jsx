@@ -18,9 +18,8 @@ const ProfilePage = () => {
   const { username } = useParams();
   const { isLoading, userProfile } = useGetProfileByUsername(username);
   const userNotFound = !isLoading && !userProfile;
-  if (userNotFound) {
-    <userNotFound />;
-  }
+  if (userNotFound) return <UserNotFound />;
+
   return (
     <Container maxW={"container.lg"} py={5}>
       <Flex
@@ -72,7 +71,8 @@ const ProfileHeaderSkeleton = () => {
     </Flex>
   );
 };
-const userNotFound = () => {
+
+const UserNotFound = () => {
   return (
     <Flex flexDir={"column"} textAlign={"center"} mx={"auto"}>
       <Text fontSize={"2xl"}>User Not Found</Text>

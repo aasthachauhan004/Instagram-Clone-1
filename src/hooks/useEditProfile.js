@@ -7,7 +7,7 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 
 const useEditProfile = () => {
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(null);
   const authUser = useAuthStore((state) => state.user);
   const setAuthUser = useAuthStore((state) => state.setUser);
   const setUserProfile = useUserProfileStore((state) => state.setUserProfile);
@@ -30,6 +30,7 @@ const useEditProfile = () => {
         ...authUser,
         fullName: inputs.fullName || authUser.fullName,
         username: inputs.username || authUser.username,
+        bio: inputs.bio || authUser.bio,
         profilePicURL: URL || authUser.profilePicURL,
       };
 
@@ -38,6 +39,7 @@ const useEditProfile = () => {
       setAuthUser(updatedUser);
       setUserProfile(updatedUser);
       showToast("Success", "Profile updated successfully", "success");
+      setIsUpdating(false);
     } catch (error) {
       showToast("Error", error.message, "error");
     }

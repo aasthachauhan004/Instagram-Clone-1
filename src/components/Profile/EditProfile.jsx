@@ -22,7 +22,7 @@ import useEditProfile from "../../hooks/useEditProfile";
 import useShowToast from "../../hooks/useShowToast";
 const EditProfile = ({ isOpen, onClose }) => {
   const [inputs, setInputs] = useState({
-    FullName: "",
+    fullName: "",
     username: "",
     bio: "",
   });
@@ -30,7 +30,7 @@ const EditProfile = ({ isOpen, onClose }) => {
   const authUser = useAuthStore((state) => state.user);
   const fileRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewing();
-  console.log(selectedFile);
+
   const { isUpdating, editProfile } = useEditProfile();
   const handleEditProfile = async () => {
     try {
@@ -103,9 +103,9 @@ const EditProfile = ({ isOpen, onClose }) => {
                     placeholder={"Full Name"}
                     size={"sm"}
                     type={"text"}
-                    value={inputs.FullName || authUser.fullName}
+                    value={inputs.fullName || authUser.fullName}
                     onChange={(e) =>
-                      setInputs({ ...inputs, FullName: e.target.value })
+                      setInputs({ ...inputs, fullName: e.target.value })
                     }
                   />
                 </FormControl>
