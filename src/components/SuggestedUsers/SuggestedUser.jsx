@@ -2,17 +2,21 @@ import { Avatar, Flex, VStack, Box, Button } from "@chakra-ui/react";
 import useFollowUser from "../../hooks/useFollowUser";
 import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
-const SuggestedUser = ({ user, setUser }) => {
+function SuggestedUser({ user, setUser }) {
   const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user.uid);
   const authUser = useAuthStore((state) => state.user);
+
   const onFollowUser = async () => {
     await handleFollowUser();
     setUser({
       ...user,
       followers: isFollowing
-        ? user.followers.filter((follower) => follower.uid !== authUser.uid)
-        : [...user.followers, authUser],
+        ? user.followers.filter((follower) => follower !== authUser.uid)
+        : [...user.followers, authUser.uid],
     });
+    // console.log(isFollowing);
+    // console.log(user);
+    // console.log(authUser);
   };
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
@@ -45,5 +49,5 @@ const SuggestedUser = ({ user, setUser }) => {
       )}
     </Flex>
   );
-};
+}
 export default SuggestedUser;
