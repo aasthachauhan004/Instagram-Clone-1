@@ -28,8 +28,6 @@ const useSearchUser = () => {
       });
     } catch (error) {
       showToast("Error", error.message, "error");
-
-      console.log("1");
       setUser(null);
     } finally {
       setIsLoading(false);
