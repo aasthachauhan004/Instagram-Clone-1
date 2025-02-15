@@ -6,6 +6,7 @@ import {
   Button,
   Input,
   InputRightElement,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import {
@@ -14,10 +15,14 @@ import {
   CommentLogo,
 } from "../../assets/constants";
 import { color } from "framer-motion";
+import useAuthStore from "../../store/authStore";
+import usePostComment from "../../hooks/usePostComment";
 
-const PostFooter = ({ username, isProfilePage }) => {
+const PostFooter = ({ post, username, isProfilePage }) => {
   const [isliked, setIsliked] = useState(false);
   const [likes, setLikes] = useState("1000");
+  const [comment, setComment] = useState("");
+  const { isCommenting, handlePostComment } = usePostComment();
   const handleLike = () => {
     setIsliked(!isliked);
     if (isliked) {
@@ -25,6 +30,11 @@ const PostFooter = ({ username, isProfilePage }) => {
     } else {
       setLikes(likes - 1);
     }
+  };
+
+  const handleSubmitComment = async () => {
+    await handlePostComment(post.id, comment);
+    setComment("");
   };
   return (
     <Box mb={10} marginTop={"auto"}>
@@ -67,6 +77,8 @@ const PostFooter = ({ username, isProfilePage }) => {
             placeholder={"Add a comment...."}
             fontSize={14}
             cursor={"pointer"}
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
           ></Input>
           <InputRightElement>
             <Button
@@ -76,6 +88,8 @@ const PostFooter = ({ username, isProfilePage }) => {
               cursor={"pointer"}
               _hover={{ color: "white" }}
               bg={"transparent"}
+              onClick={handleSubmitComment}
+              isLoading={isCommenting}
             >
               Post
             </Button>

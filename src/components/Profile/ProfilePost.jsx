@@ -35,6 +35,7 @@ const ProfilePost = ({ post }) => {
   const deletePost = usePostStore((state) => state.deletePost);
 
   const [isDeleting, setIsDeleting] = useState();
+  console.log(post.comments);
   const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
   const handleDeletePost = async (params) => {
     if (!window.confirm("Are you sure you want to delete this post")) return;
@@ -173,21 +174,12 @@ const ProfilePost = ({ post }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
-                  <Comment
-                    createdAt='1 day ago'
-                    username='asaprogrammer_'
-                    profilePic='/profilepic.png'
-                    text='dummy images from unspalsh'
-                  />
-                  <Comment
-                    createdAt='12h ago'
-                    username='abrahmov'
-                    profilePic='https://bit.ly/dan-abramov'
-                    text='nice recommendation'
-                  />
+                  {post.comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
+                  ))}
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />
-                <PostFooter isProfilePage={true} />
+                <PostFooter isProfilePage={true} post={post} />
               </Flex>
             </Flex>
           </ModalBody>
