@@ -27,6 +27,7 @@ import { ref, deleteObject } from "firebase/storage";
 import { firestore, storage } from "../../firebase/firebase";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import usePostStore from "../../store/postStore";
+import Caption from "../Comment/Caption";
 const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useUserProfileStore((state) => state.userProfile);
@@ -35,7 +36,7 @@ const ProfilePost = ({ post }) => {
   const deletePost = usePostStore((state) => state.deletePost);
 
   const [isDeleting, setIsDeleting] = useState();
-  console.log(post.comments);
+
   const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
   const handleDeletePost = async (params) => {
     if (!window.confirm("Are you sure you want to delete this post")) return;
@@ -174,8 +175,12 @@ const ProfilePost = ({ post }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
-                  {post.comments.map((comment) => (
-                    <Comment key={comment.id} comment={comment} />
+                  {/* CAPTION */}
+                  {post.caption && <Caption post={post} />}
+                  {/* COMPONENTS */}
+
+                  {post.comments.map((comment, idx) => (
+                    <Comment key={idx} comment={comment} />
                   ))}
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />

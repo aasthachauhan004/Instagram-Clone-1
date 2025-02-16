@@ -21,7 +21,7 @@ const usePostComment = () => {
       comment: comment,
       createdAt: Date.now(),
       createdBy: authUser.uid,
-      postId,
+      postId: postId,
     };
     try {
       await updateDoc(doc(firestore, "posts", postId), {
