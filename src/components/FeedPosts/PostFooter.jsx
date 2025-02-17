@@ -17,32 +17,24 @@ import {
 
 import useAuthStore from "../../store/authStore";
 import usePostComment from "../../hooks/usePostComment";
+import useLikePost from "../../hooks/useLikePost";
 
 const PostFooter = ({ post, username, isProfilePage }) => {
-  const [isliked, setIsliked] = useState(false);
-  const [likes, setLikes] = useState("1000");
   const commentRef = useRef(null);
   const { isCommenting, handlePostComment } = usePostComment();
   const [comment, setComment] = useState("");
   const authUser = useAuthStore((state) => state.user);
+  const { handleLikePost, isLiked, isUpdating, likes } = useLikePost(post);
   const handleSubmitComment = async () => {
     await handlePostComment(post.id, comment);
     setComment("");
-  };
-  const handleLike = () => {
-    setIsliked(!isliked);
-    if (isliked) {
-      setLikes(likes + 1);
-    } else {
-      setLikes(likes - 1);
-    }
   };
 
   return (
     <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={"4"}>
-        <Box onClick={handleLike} cursor={"pointer"} fontSize={10}>
-          {!isliked ? <NotificationsLogo /> : <UnlikeLogo />}
+        <Box onClick={handleLikePost} cursor={"pointer"} fontSize={10}>
+          {!isLiked ? <NotificationsLogo /> : <UnlikeLogo />}
         </Box>
 
         <Box
@@ -56,7 +48,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
         </Box>
       </Flex>
       <Text fontSize='sm' fontWeight={600}>
-        {likes}Likes
+        {likes} Likes
       </Text>
       {!isProfilePage && (
         <>
