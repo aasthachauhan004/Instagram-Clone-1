@@ -18,8 +18,9 @@ import {
 import useAuthStore from "../../store/authStore";
 import usePostComment from "../../hooks/usePostComment";
 import useLikePost from "../../hooks/useLikePost";
+import { timeAgo } from "../../utils/timeAlgo";
 
-const PostFooter = ({ post, username, isProfilePage }) => {
+const PostFooter = ({ post, username, isProfilePage, creatorProfile }) => {
   const commentRef = useRef(null);
   const { isCommenting, handlePostComment } = usePostComment();
   const [comment, setComment] = useState("");
@@ -49,19 +50,26 @@ const PostFooter = ({ post, username, isProfilePage }) => {
       </Flex>
       <Text fontSize='sm' fontWeight={600}>
         {likes} Likes
+        {isProfilePage && (
+          <Text fontSize={12} color={"grey"}>
+            Posted {timeAgo(post.createdAt)}
+          </Text>
+        )}
       </Text>
       {!isProfilePage && (
         <>
           <Text fontSize='sm' fontWeight={700}>
-            {username}{" "}
+            {creatorProfile?.username}{" "}
             <Text as='span' fontWeight='400'>
-              Felling Good
+              {post.caption}
             </Text>
           </Text>
 
-          <Text fontSize='sm' color={"gray"}>
-            View all 1,000 comments
-          </Text>
+          {post.comments.length > 0 && (
+            <Text fontSize='sm' color={"gray"} cursor={"pointer"}>
+              View all {post.comments.length} comments
+            </Text>
+          )}
         </>
       )}
 

@@ -1,52 +1,51 @@
 import {
+  Box,
   Container,
   Flex,
-  VStack,
-  SkeletonCircle,
   Skeleton,
-  Box,
+  SkeletonCircle,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
+import React from "react";
 import FeedPost from "./FeedPost";
-import { useEffect, useState } from "react";
+import useGetFeedPosts from "../../hooks/useGetFeedPosts";
 
-const FeedPosts = () => {
-  const [isloading, setIsloading] = useState(true);
+function FeedPosts() {
+  const { isLoading, posts } = useGetFeedPosts();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsloading(false);
-    }, 1000);
-  }, []);
   return (
     <Container maxW={"container.sm"} py={10} px={2}>
-      {isloading &&
-        [0, 1, 2, 3].map((item, idx) => (
-          <VStack key={idx} gap={4} alignItems={"flex-start"} mb={10}>
+      {isLoading &&
+        [0, 1, 2].map((_, idx) => (
+          <VStack key={idx} gap={2} alignItems={"flex-start"} mb={10}>
             <Flex gap={2}>
-              <SkeletonCircle size='10' />
+              <SkeletonCircle size={10} />
               <VStack gap={2} alignItems={"flex-start"}>
-                <Skeleton height='10px' w={"200px"} />
-                <Skeleton height='10px' w={"200px"} />
+                <Skeleton height={"10px"} width={"200px"} />
+                <Skeleton height={"10px"} width={"200px"} />
               </VStack>
             </Flex>
             <Skeleton w={"full"}>
-              <Box h={"500px"}>contents wrapped</Box>
+              <Box height={"400px"}> Contents Wrapped</Box>
             </Skeleton>
           </VStack>
         ))}
-      {!isloading && (
+      {!isLoading &&
+        posts.length > 0 &&
+        posts.map((post) => <FeedPost key={post.id} post={post} />)}
+      {!isLoading && posts.length === 0 && (
         <>
-          <FeedPost username='janedoe' image='/img1.png' avatar='/img1.png' />
-          <FeedPost
-            username='burakorkmaeaz'
-            image='/img2.png'
-            avatar='/img2.png'
-          />
-          <FeedPost username='josh' image='/img3.png' avatar='/img3.png' />
-          <FeedPost username='joshdoe' image='/img4.png' avatar='/img4.png' />
+          <Text fontSize={"md"} color={"red.400"}>
+            Looks like you don't have any friends.
+          </Text>
+          <Text fontSize={"md"} color={"red.400"}>
+            Make some friends.
+          </Text>
         </>
       )}
     </Container>
   );
-};
+}
+
 export default FeedPosts;
