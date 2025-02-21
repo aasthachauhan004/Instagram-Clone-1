@@ -8,7 +8,7 @@ import { firestore } from "../firebase/firebase";
 import usePostStore from "../store/postStore";
 
 const useGetFeedPosts = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { posts, setPosts } = usePostStore();
   const authUser = useAuthStore((state) => state.user);
   const showToast = useShowToast();
