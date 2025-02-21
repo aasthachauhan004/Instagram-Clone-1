@@ -77,12 +77,7 @@ const EditProfile = ({ isOpen, onClose }) => {
                       />
                     </Center>
                     <Center w='full'>
-                      <Button
-                        w='full'
-                        onClick={() => {
-                          fileRef.current.click();
-                        }}
-                      >
+                      <Button w='full' onClick={() => fileRef.current.click()}>
                         Edit Profile Picture
                       </Button>
                     </Center>

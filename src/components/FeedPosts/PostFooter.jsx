@@ -19,6 +19,7 @@ import useAuthStore from "../../store/authStore";
 import usePostComment from "../../hooks/usePostComment";
 import useLikePost from "../../hooks/useLikePost";
 import { timeAgo } from "../../utils/timeAlgo";
+import CommentsModal from "../Comment/CommentsModal";
 
 const PostFooter = ({ post, username, isProfilePage, creatorProfile }) => {
   const commentRef = useRef(null);
@@ -26,6 +27,7 @@ const PostFooter = ({ post, username, isProfilePage, creatorProfile }) => {
   const [comment, setComment] = useState("");
   const authUser = useAuthStore((state) => state.user);
   const { handleLikePost, isLiked, isUpdating, likes } = useLikePost(post);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const handleSubmitComment = async () => {
     await handlePostComment(post.id, comment);
     setComment("");
@@ -66,10 +68,23 @@ const PostFooter = ({ post, username, isProfilePage, creatorProfile }) => {
           </Text>
 
           {post.comments.length > 0 && (
-            <Text fontSize='sm' color={"gray"} cursor={"pointer"}>
+            <Text
+              fontSize='sm'
+              color={"gray"}
+              cursor={"pointer"}
+              onClick={onOpen}
+            >
               View all {post.comments.length} comments
             </Text>
           )}
+          {/* CommentsModal only on HomePage */}
+          {isOpen ? (
+            <CommentsModal
+              isOpen={isOpen}
+              onClose={onClose}
+              post={post}
+            ></CommentsModal>
+          ) : null}
         </>
       )}
 
