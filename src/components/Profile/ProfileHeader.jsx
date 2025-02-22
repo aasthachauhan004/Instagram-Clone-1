@@ -22,9 +22,10 @@ const ProfileHeader = () => {
   );
   const visitingOwnProfileAndAuth =
     authUser && authUser.username === userProfile.username;
+  console.log(visitingOwnProfileAndAuth);
   const visitingAnotherProfileAndAuth =
     authUser && authUser.username !== userProfile.username;
-
+  console.log(visitingAnotherProfileAndAuth);
   return (
     <>
       <Flex
@@ -111,7 +112,7 @@ const ProfileHeader = () => {
           </Flex>
           <Text fontSize={"sm"}>{userProfile.bio}</Text>
         </VStack>
-        {onOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
+        {isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
       </Flex>
     </>
   );

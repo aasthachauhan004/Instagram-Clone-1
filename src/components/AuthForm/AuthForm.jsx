@@ -1,4 +1,4 @@
-import { Box, VStack, Flex, Text } from "@chakra-ui/react";
+import { Box, VStack, Flex, Text, Image } from "@chakra-ui/react";
 import { useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -10,6 +10,8 @@ function AuthForm() {
   return (
     <>
       <Box border={"1px solid gray"} borderRadius={4} padding={5}>
+        <Image src='/logo.png' h={24} cursor={"pointer"} alt='Instagram' />
+
         <VStack spacing={4}>
           {isLogin ? <Login /> : <Signup />}
 

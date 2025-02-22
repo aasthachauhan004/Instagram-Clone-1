@@ -3,7 +3,7 @@ import HomePage from "./Pages/HomePage/HomePage";
 import AuthPage from "./Pages/AuthPage/AuthPage";
 import PageLayout from "./Layouts/PageLayout/PageLayout";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import { auth } from "./firebase/firebase";
+import { auth } from "./Firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 function App() {
